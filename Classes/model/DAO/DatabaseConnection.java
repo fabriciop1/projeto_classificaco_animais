@@ -28,7 +28,7 @@ public class DatabaseConnection {
         String database = "animal_scores"; 
         String url = "jdbc:mysql://" + serverName + ":" + portNumber + "/" + database;
         String username = "root"; 
-        String password = "root"; 
+        String password = "1234"; 
         
         try {
             Class.forName(driverName);

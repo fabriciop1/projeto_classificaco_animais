@@ -15,6 +15,7 @@ public class Animal {
     
     private int id;
     private String description;
+    
     private ArrayList<Score> scores;
     private ArrayList<Image> images;
     
