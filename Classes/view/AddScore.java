@@ -6,15 +6,20 @@
 package view;
 
 import controller.UserController;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import model.DAO.AnimalDAO;
+import model.DAO.ImageDAO;
 import model.DAO.ScoreDAO;
 import model.DAO.UserDAO;
 import model.business.Animal;
+import model.business.Image;
 import model.business.Score;
 import model.business.User;
 
@@ -38,6 +43,7 @@ public class AddScore extends javax.swing.JFrame {
         ArrayList<Animal> animals = new ArrayList<>();
         ArrayList<Score> scoresByUser = new ArrayList<>();
         
+        ImageDAO imageDAO = new ImageDAO();
         UserDAO userDAO = new UserDAO();
         ScoreDAO scoreDAO = new ScoreDAO();
         AnimalDAO animalDAO = new AnimalDAO();
@@ -77,17 +83,38 @@ public class AddScore extends javax.swing.JFrame {
             animal = animals.get(0);
             
             idAnimal.setText("" + animal.getId());
-            
+            imageTest.setIcon(getImage(animal.getId()));
         } else {
             JOptionPane.showMessageDialog(null, "Você já deu nota em todos os animais.", "Nenhum animal disponível", 0);
         }
         
-        //add imagens no Scroll Panel
-        //jScrollPane1.add(Image)
-        
-        
-        
+        //jScrollPane1.updateUI();   
     }
+    
+    public ImageIcon getImage(int id){
+        
+        ImageDAO imageDAO = new ImageDAO();
+        Image imageObj = new Image();
+        BufferedImage image = null;
+        
+        try {
+            imageObj = imageDAO.retrieveByAnimal(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(AddScore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            image = ImageDAO.convertBlobToImage(imageObj.getImage());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        ImageIcon icon = new ImageIcon(image);
+        
+        return icon;
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -101,6 +128,8 @@ public class AddScore extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
+        imageTest = new javax.swing.JLabel();
         btnSair = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         spinnerNota = new javax.swing.JSpinner();
@@ -114,6 +143,14 @@ public class AddScore extends javax.swing.JFrame {
 
         jScrollPane1.setMinimumSize(new java.awt.Dimension(500, 500));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(600, 600));
+
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        imageTest.setText("<imagem>");
+        jPanel2.add(imageTest, new java.awt.GridBagConstraints());
+
+        jScrollPane1.setViewportView(jPanel2);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -289,9 +326,11 @@ public class AddScore extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel idAnimal;
+    private javax.swing.JLabel imageTest;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner spinnerNota;
     // End of variables declaration//GEN-END:variables
