@@ -104,17 +104,21 @@ public class UserDAO {
         
         String sql = "SELECT * FROM User WHERE user_login=?";
         
-        User user = new User();
+        User user = null;
         
         PreparedStatement st = conn.prepareStatement(sql);
         st.setString(1, login);       
         
         ResultSet rs = st.executeQuery();
-        
-        user.setId(rs.getInt("idUser"));
-        user.setName(rs.getString("user_name"));
-        user.setLogin(rs.getString("user_login"));
-        user.setPassword(rs.getString("user_password"));
+                
+        if(rs.next()) {
+                user = new User();
+                
+                user.setId(rs.getInt("idUser"));
+                user.setName(rs.getString("user_name"));
+                user.setLogin(rs.getString("user_login"));
+                user.setPassword(rs.getString("user_password"));
+        }
         
         rs.close();
         st.close();

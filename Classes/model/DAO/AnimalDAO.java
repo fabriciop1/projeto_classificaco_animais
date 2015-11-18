@@ -97,8 +97,6 @@ public class AnimalDAO {
         if(rs.next()){
             a.setId(rs.getInt("idAnimal"));
             a.setDescription(rs.getString("animal_description"));
-            a.setScores((new ScoreDAO()).retrieveByAnimal(idAnimal));
-            //a.setImages((new ImageDAO()).retrieveByAnimal(idAnimal));
         }
         
         rs.close();
@@ -128,8 +126,6 @@ public class AnimalDAO {
 
             a.setId(rs.getInt("idAnimal"));
             a.setDescription(rs.getString("animal_description"));
-            a.setScores(scoreDao.retrieveByAnimal(a.getId()));
-            //a.setImages(imageDao.retrieveByAnimal(a.getId());
             
             martinGarrix.add(a);
         }

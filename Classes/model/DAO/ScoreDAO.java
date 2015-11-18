@@ -35,7 +35,7 @@ public class ScoreDAO {
         
         st.setInt(1, s.getAnimal().getId());
         st.setDouble(2, s.getScore());
-        st.setInt(1, s.getUser().getId());
+        st.setInt(3, s.getUser().getId());
         
         st.executeUpdate();
         
@@ -87,9 +87,9 @@ public class ScoreDAO {
         
         if(rs.next()){
             s.setId(rs.getInt("idScore"));
-            s.setAnimal((new AnimalDAO()).retrieveById(rs.getInt("idAnimal")));
+            s.setAnimal((Animal) rs.getObject("idAnimal"));
             s.setScore(rs.getDouble("score"));
-            s.setUser((new UserDAO()).retrieveById(rs.getInt("idUser")));
+            s.setUser((User) rs.getObject("idUser"));
         }
         
         rs.close();
@@ -120,9 +120,9 @@ public class ScoreDAO {
             Score s = new Score();
             
             s.setId(rs.getInt("idScore"));
-            s.setAnimal(animalDao.retrieveById(rs.getInt("idAnimal")));
+            s.setAnimal((Animal) rs.getObject("idAnimal"));
             s.setScore(rs.getDouble("score"));
-            s.setUser(userDao.retrieveById(rs.getInt("idUser")));
+            s.setUser((User) rs.getObject("idUser"));
             
             scores.add(s);
         }
@@ -155,9 +155,9 @@ public class ScoreDAO {
             Score s = new Score();
             
             s.setId(rs.getInt("idScore"));
-            s.setAnimal(animalDao.retrieveById(rs.getInt("idAnimal")));
+            s.setAnimal((Animal) rs.getObject("idAnimal"));
             s.setScore(rs.getDouble("score"));
-            s.setUser(userDao.retrieveById(rs.getInt("idUser")));
+            s.setUser((User) rs.getObject("idUser"));
             
             scores.add(s);
         }
