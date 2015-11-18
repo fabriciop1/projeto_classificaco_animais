@@ -11,10 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.business.*;
-import util.TrashGen;
 
 /**
  *
@@ -47,7 +44,6 @@ public class ScoreDAO {
         
         key.close();
         st.close();
-        
         
         DatabaseConnection.closeConnection(conn);
     }
@@ -87,9 +83,9 @@ public class ScoreDAO {
         
         if(rs.next()){
             s.setId(rs.getInt("idScore"));
-            s.setAnimal((Animal) rs.getObject("idAnimal"));
+            s.setAnimal((new AnimalDAO()).retrieveById(rs.getInt("idAnimal")));
             s.setScore(rs.getDouble("score"));
-            s.setUser((User) rs.getObject("idUser"));
+            s.setUser((new UserDAO()).retrieveById(rs.getInt("idUser")));
         }
         
         rs.close();
@@ -120,9 +116,9 @@ public class ScoreDAO {
             Score s = new Score();
             
             s.setId(rs.getInt("idScore"));
-            s.setAnimal((Animal) rs.getObject("idAnimal"));
+            s.setAnimal((new AnimalDAO()).retrieveById(rs.getInt("idAnimal")));
             s.setScore(rs.getDouble("score"));
-            s.setUser((User) rs.getObject("idUser"));
+            s.setUser((new UserDAO()).retrieveById(rs.getInt("idUser")));
             
             scores.add(s);
         }
@@ -148,16 +144,13 @@ public class ScoreDAO {
         
         ResultSet rs = st.executeQuery();
         
-        AnimalDAO animalDao = new AnimalDAO();
-        UserDAO userDao = new UserDAO();
-        
         while(rs.next()){
             Score s = new Score();
             
             s.setId(rs.getInt("idScore"));
-            s.setAnimal((Animal) rs.getObject("idAnimal"));
+            s.setAnimal((new AnimalDAO()).retrieveById(rs.getInt("idAnimal")));
             s.setScore(rs.getDouble("score"));
-            s.setUser((User) rs.getObject("idUser"));
+            s.setUser((new UserDAO()).retrieveById(rs.getInt("idUser")));
             
             scores.add(s);
         }

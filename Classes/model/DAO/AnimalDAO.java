@@ -11,10 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.business.*;
-import util.TrashGen;
 
 /**
  *
@@ -111,14 +108,14 @@ public class AnimalDAO {
         
         conn = DatabaseConnection.openConnection();
         
-        ArrayList<Animal> martinGarrix = new ArrayList<>();
+        ArrayList<Animal> animal = new ArrayList<>();
         
         String sql = "SELECT * FROM Animal";
         
         PreparedStatement st = conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         
-        ScoreDAO scoreDao = new ScoreDAO();
+        //ScoreDAO scoreDao = new ScoreDAO();
         //ImageDAO imageDao = new ImageDAO();
         
         while(rs.next()){
@@ -127,7 +124,7 @@ public class AnimalDAO {
             a.setId(rs.getInt("idAnimal"));
             a.setDescription(rs.getString("animal_description"));
             
-            martinGarrix.add(a);
+            animal.add(a);
         }
         
         rs.close();
@@ -135,6 +132,6 @@ public class AnimalDAO {
         
         DatabaseConnection.closeConnection(conn);
         
-        return martinGarrix;
+        return animal;
     }
 }
