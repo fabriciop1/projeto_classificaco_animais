@@ -74,8 +74,10 @@ public class AddScore extends javax.swing.JFrame {
         }
         
         for(int i = 0; i < scoresByUser.size(); i++){
-            if( animals.contains(scoresByUser.get(i).getAnimal()) ){
-                animals.remove(scoresByUser.get(i).getAnimal());
+            for(int j = 0; j < animals.size(); j++){
+                if(scoresByUser.get(i).getAnimal().getId() == animals.get(j).getId()){
+                    animals.remove(animals.get(j));
+                }
             }
         }
         
@@ -85,10 +87,9 @@ public class AddScore extends javax.swing.JFrame {
             idAnimal.setText("" + animal.getId());
             imageTest.setIcon(getImage(animal.getId()));
         } else {
-            JOptionPane.showMessageDialog(null, "Você já deu nota em todos os animais.", "Nenhum animal disponível", 0);
+            JOptionPane.showMessageDialog(null, "Você já deu nota em todos os animais.", "Nenhum animal disponível", 0);              
         }
         
-        //jScrollPane1.updateUI();   
     }
     
     public ImageIcon getImage(int id){
@@ -145,8 +146,6 @@ public class AddScore extends javax.swing.JFrame {
         jScrollPane1.setPreferredSize(new java.awt.Dimension(600, 600));
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
-
-        imageTest.setText("<imagem>");
         jPanel2.add(imageTest, new java.awt.GridBagConstraints());
 
         jScrollPane1.setViewportView(jPanel2);

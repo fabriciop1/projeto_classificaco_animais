@@ -210,19 +210,29 @@ public class ImageDAO {
         ImageIO.write(image, imageFormat, file);
     }
     
-//    public static void main(String[] arg){
-//        
-//        try {
-//            
-//            Image img = (new ImageDAO()).retrieveByAnimal(1);
-//            
-//            BufferedImage buff = convertBlobToImage(img.getImage());
-//            saveImage(buff,"png","D:\\estamerdapegoucaralho.png");
-//            
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ImageDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(ImageDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    public static void main(String[] arg){
+        Connection connection = null;
+        
+              try{    
+                              connection = DatabaseConnection.openConnection();
+                              
+            BufferedImage buff = loadImage("C:\\Users\\Fabricio\\Documents\\NetBeansProjects\\NotasImagensAnimais\\images\\20151112_153059.jpg");
+            
+            Image i = new Image();
+            i.setAnimal((new AnimalDAO()).retrieveById(2));
+            i.setImage(convertImageToBlob(buff,"jpg",connection));
+            
+            (new ImageDAO()).insert(i);
+            
+              }catch(Exception e ){
+                  
+              }finally{
+                  DatabaseConnection.closeConnection(connection);
+              }
+            
+            
+            
+            
+    }
+    
 }
