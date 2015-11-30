@@ -116,23 +116,27 @@ public class ImageDAO {
         return i;
     }
 
-    public Image retrieveByAnimal(int idAnimal) throws SQLException{
+    public ArrayList<Image> retrieveByAnimal(int idAnimal) throws SQLException{
         
         conn = DatabaseConnection.openConnection();
         
         String sql = "SELECT * FROM Image WHERE idAnimal=?";
+        
+        ArrayList<Image> images = new ArrayList<>();
         
         PreparedStatement st = conn.prepareStatement(sql);
         st.setInt(1, idAnimal);
         
         ResultSet rs = st.executeQuery();
         
-        Image i = new Image();
-        
-        if(rs.next()){
+        while(rs.next()){
+            Image i = new Image();
+            
             i.setId(rs.getInt("idImage"));
             i.setAnimal((new AnimalDAO()).retrieveById(idAnimal));
             i.setImage(rs.getBlob("animal_image"));
+            
+            images.add(i);
         }
         
         rs.close();
@@ -140,7 +144,7 @@ public class ImageDAO {
         
         DatabaseConnection.closeConnection(conn);
         
-        return i;
+        return images;
     }
 
     public ArrayList<Image> retrieveAll() throws SQLException{
@@ -213,22 +217,22 @@ public class ImageDAO {
     public static void main(String[] arg){
         Connection connection = null;
         
-              try{    
-                              connection = DatabaseConnection.openConnection();
+            try{    
+                connection = DatabaseConnection.openConnection();
                               
-            BufferedImage buff = loadImage("C:\\Users\\Fabricio\\Documents\\NetBeansProjects\\NotasImagensAnimais\\images\\20151112_153059.jpg");
+                BufferedImage buff = loadImage("C:\\Users\\Alexandre\\Documents\\NetBeansProjects\\ProcessamentoImagensUAG\\src\\images\\20151112_163630.jpg");
             
-            Image i = new Image();
-            i.setAnimal((new AnimalDAO()).retrieveById(2));
-            i.setImage(convertImageToBlob(buff,"jpg",connection));
+                Image i = new Image();
+                i.setAnimal((new AnimalDAO()).retrieveById(4));
+                i.setImage(convertImageToBlob(buff,"jpg",connection));
             
-            (new ImageDAO()).insert(i);
+                (new ImageDAO()).insert(i);
             
-              }catch(Exception e ){
+            }catch(Exception e ){
                   
-              }finally{
-                  DatabaseConnection.closeConnection(connection);
-              }
+            }finally{
+                DatabaseConnection.closeConnection(connection);
+            }
             
             
             

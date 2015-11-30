@@ -58,6 +58,11 @@ public class Login extends javax.swing.JFrame {
                 btnEntrarActionPerformed(evt);
             }
         });
+        btnEntrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                btnEntrarKeyTyped(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -144,6 +149,10 @@ public class Login extends javax.swing.JFrame {
     private void campoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoLoginActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoLoginActionPerformed
+
+    private void btnEntrarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEntrarKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEntrarKeyTyped
 
     /**
      * @param args the command line arguments

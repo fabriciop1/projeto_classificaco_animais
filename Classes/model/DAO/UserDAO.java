@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.business.User;
 
 /**
@@ -168,6 +170,26 @@ public class UserDAO {
         statement.close();
             
         DatabaseConnection.closeConnection(conn);
+    }
+    
+    public static void main(String[] args){
+        
+        UserDAO userDAO = new UserDAO();
+        
+        for(int i = 1; i <= 10; i++){
+            
+            User user = new User();
+            user.setLogin("u" + (i + 1000));
+            user.setPassword("s" + (i + 1000));
+            
+            try {
+                userDAO.insert(user);
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        
     }
 
 }
